@@ -1,0 +1,50 @@
+{% extends 'front/base.html' %}
+
+{% block title %}
+    {{ post.title }}
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static',filename='editormd/css/editormd.css') }}"/>
+    <script src="{{ url_for('static',filename='front/js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='editormd/editormd.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='editormd/lib/prettify.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='editormd/lib/raphael.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='editormd/lib/underscore.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='editormd/lib/sequence-diagram.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='editormd/lib/jquery.flowchart.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='editormd/lib/marked.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static',filename='front/css/post_detail.css') }}">
+    <script type="text/javascript">
+        $(function () {
+            var editor = editormd.markdownToHTML("test-editor", {
+                width: "100%",
+                height: "500px",
+                readOnly: true,
+                path: "/static/editormd/lib/",
+                editor:false,
+                watch:true
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div class="lg-container">
+        <div class="post-container">
+            <h2>{{ post.title }}</h2>
+            <p class="post-info-group">
+                <span>发表时间：{{ post.create_time }}</span>
+                <span>作者：{{ post.author.username }}</span>
+                <span>所属板块：{{ post.board.name }}</span>
+                <span>阅读数：{{ post.read_count }}</span>
+            </p>
+            <article class="post-content" id="post-content">
+                <div id="test-editor">
+                    <textarea style="display:none;">{{ post.content }}</textarea>
+                </div>
+            </article>
+        </div>
+    </div>
+    <div class="sm-container"></div>
+{% endblock %}
